@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import mainImg from "../assets/main.jpg";
 
 export default function Welcome({ setPlayerName }) {
     const navigate = useNavigate();
@@ -7,7 +8,7 @@ export default function Welcome({ setPlayerName }) {
         <>
             <Background>
                 <BackgroundImg
-                    src="../main.jpg"
+                    src={mainImg}
                     alt="background image"
                     loading="lazy"
                 />
