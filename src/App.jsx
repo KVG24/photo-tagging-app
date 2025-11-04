@@ -1,12 +1,18 @@
 import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Welcome from "./components/Welcome";
+import Game from "./components/Game";
+import Leaderboards from "./components/Leaderboards";
 
 function App() {
     return (
-        <>
-            <div>
-                <h1>Find Cartoon characters</h1>
-            </div>
-        </>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Welcome />} />
+                <Route path="game" element={<Game />} />
+                <Route path="leaderboards" element={<Leaderboards />} />
+            </Routes>
+        </BrowserRouter>
     );
 }
 
