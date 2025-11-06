@@ -8,6 +8,8 @@ export default function Game() {
 
     const handleClick = (e) => {
         const img = imgRef.current;
+        if (!img) return;
+
         const rect = img.getBoundingClientRect();
 
         const x = e.clientX - rect.left;
@@ -19,17 +21,35 @@ export default function Game() {
         const normalizedX = Math.round(x * scaleX);
         const normalizedY = Math.round(y * scaleY);
 
-        console.log("Coordinates: ", normalizedX, normalizedY);
+        console.log("Coordinates:", normalizedX, normalizedY);
     };
 
     return (
         <Container onClick={handleClick}>
-            <TransformWrapper>
-                <TransformComponent>
+            <TransformWrapper
+                initialScale={Math.max(
+                    window.innerWidth / 4000,
+                    window.innerHeight / 3000
+                )}
+                minScale={0.5}
+                maxScale={5}
+                wheel={{ step: 0.1 }}
+                pinch={{ step: 0.1 }}
+                doubleClick={{ disabled: true }}
+                panning={{ velocityDisabled: true }}
+                centerOnInit={true}
+            >
+                <TransformComponent
+                    wrapperStyle={{
+                        width: "100%",
+                        height: "100%",
+                    }}
+                >
                     <StyledImg
                         ref={imgRef}
                         src={mainImg}
                         alt="Image with cartoon characters"
+                        draggable={false}
                     />
                 </TransformComponent>
             </TransformWrapper>
@@ -41,12 +61,13 @@ const Container = styled.div`
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    background: black;
 `;
 
 const StyledImg = styled.img`
-    width: 100%;
-    height: 100vh;
+    width: 4000px;
+    height: 3000px;
     object-fit: contain;
-    display: block;
-    border: 2px solid black;
+    user-select: none;
+    cursor: crosshair;
 `;
