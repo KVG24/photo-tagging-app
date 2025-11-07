@@ -3,19 +3,11 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styled from "styled-components";
 import mainImg from "../assets/main.jpg";
 import WinnerModal from "./WinnerModal";
+import characters from "../data/characters";
 
 export default function Game() {
     const imgRef = useRef(null);
     const [win, setWin] = useState(false);
-
-    const characters = {
-        waldo: {
-            maxX: 2186,
-            minX: 2146,
-            maxY: 1036,
-            minY: 976,
-        },
-    };
 
     function checkClick(x, y, character) {
         return (
@@ -44,9 +36,9 @@ export default function Game() {
         const x = Math.round(clickedX * ratioX);
         const y = Math.round(clickedY * ratioY);
 
-        // console.log("Coordinates:", x, y);
+        console.log("Coordinates:", x, y);
 
-        if (checkClick(x, y, characters.waldo)) {
+        if (checkClick(x, y, characters.wally)) {
             setWin(true);
         }
     };

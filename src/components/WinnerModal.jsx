@@ -8,7 +8,7 @@ export default function WinnerModal() {
     return ReactDOM.createPortal(
         <Overlay>
             <ModalBox onClick={(e) => e.stopPropagation()}>
-                <h2>You have found Waldo!</h2>
+                <h2>You have found Wally!</h2>
                 <RestartButton type="button" onClick={() => navigate("/")}>
                     Restart
                 </RestartButton>
