@@ -1,59 +1,89 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styled from "styled-components";
 import mainImg from "../assets/main.jpg";
+import WinnerModal from "./WinnerModal";
 
 export default function Game() {
     const imgRef = useRef(null);
+    const [win, setWin] = useState(false);
+
+    const characters = {
+        waldo: {
+            maxX: 2186,
+            minX: 2146,
+            maxY: 1036,
+            minY: 976,
+        },
+    };
+
+    function checkClick(x, y, character) {
+        return (
+            x <= character.maxX &&
+            x >= character.minX &&
+            y <= character.maxY &&
+            y >= character.minY
+        );
+    }
 
     const handleClick = (e) => {
         const img = imgRef.current;
         if (!img) return;
 
-        const rect = img.getBoundingClientRect();
+        const rect = img.getBoundingClientRect(); // get position and size of image
 
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+        // get clicked location on the image
+        const clickedX = e.clientX - rect.left;
+        const clickedY = e.clientY - rect.top;
 
-        const scaleX = img.naturalWidth / rect.width;
-        const scaleY = img.naturalHeight / rect.height;
+        // get ratio between natural and displayed image size
+        const ratioX = img.naturalWidth / rect.width;
+        const ratioY = img.naturalHeight / rect.height;
 
-        const normalizedX = Math.round(x * scaleX);
-        const normalizedY = Math.round(y * scaleY);
+        // final coordinated of the click in pixels
+        const x = Math.round(clickedX * ratioX);
+        const y = Math.round(clickedY * ratioY);
 
-        console.log("Coordinates:", normalizedX, normalizedY);
+        // console.log("Coordinates:", x, y);
+
+        if (checkClick(x, y, characters.waldo)) {
+            setWin(true);
+        }
     };
 
     return (
-        <Container onClick={handleClick}>
-            <TransformWrapper
-                initialScale={Math.max(
-                    window.innerWidth / 4000,
-                    window.innerHeight / 3000
-                )}
-                minScale={0.5}
-                maxScale={5}
-                wheel={{ step: 0.1 }}
-                pinch={{ step: 0.1 }}
-                doubleClick={{ disabled: true }}
-                panning={{ velocityDisabled: true }}
-                centerOnInit={true}
-            >
-                <TransformComponent
-                    wrapperStyle={{
-                        width: "100%",
-                        height: "100%",
-                    }}
+        <>
+            <Container onClick={handleClick}>
+                <TransformWrapper
+                    initialScale={Math.max(
+                        window.innerWidth / 4000,
+                        window.innerHeight / 3000
+                    )}
+                    minScale={0.3}
+                    maxScale={5}
+                    wheel={{ step: 0.1 }}
+                    pinch={{ step: 0.1 }}
+                    doubleClick={{ disabled: true }}
+                    panning={{ velocityDisabled: true }}
+                    centerOnInit={true}
                 >
-                    <StyledImg
-                        ref={imgRef}
-                        src={mainImg}
-                        alt="Image with cartoon characters"
-                        draggable={false}
-                    />
-                </TransformComponent>
-            </TransformWrapper>
-        </Container>
+                    <TransformComponent
+                        wrapperStyle={{
+                            width: "100%",
+                            height: "100%",
+                        }}
+                    >
+                        <StyledImg
+                            ref={imgRef}
+                            src={mainImg}
+                            alt="Image with cartoon characters"
+                            draggable={false}
+                        />
+                    </TransformComponent>
+                </TransformWrapper>
+            </Container>
+            {win && <WinnerModal />}
+        </>
     );
 }
 

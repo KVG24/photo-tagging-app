@@ -10,10 +10,7 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route
-                    path="/"
-                    element={<Welcome setPlayerName={setPlayerName} />}
-                />
+                <Route path="/" element={<Welcome />} />
                 <Route path="game" element={<Game />} />
                 <Route path="leaderboards" element={<Leaderboards />} />
             </Routes>

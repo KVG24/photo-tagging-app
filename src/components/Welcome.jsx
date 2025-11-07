@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import mainImg from "../assets/main.jpg";
 
-export default function Welcome({ setPlayerName }) {
+export default function Welcome() {
     const navigate = useNavigate();
     return (
         <>
@@ -17,21 +17,9 @@ export default function Welcome({ setPlayerName }) {
             <Container>
                 <h1>Photo tagging game</h1>
                 <h3>Find Cartoon Characters</h3>
-                <InputContainer
-                    onSubmit={(e) => {
-                        e.preventDefault();
-                        navigate("/game");
-                    }}
-                >
-                    <StyledInput
-                        type="text"
-                        name="playerName"
-                        onChange={(e) => setPlayerName(e.target.value)}
-                        placeholder="Enter your name"
-                        required
-                    />
-                    <StyledButton type="submit">Start</StyledButton>
-                </InputContainer>
+                <StyledButton type="button" onClick={() => navigate("/game")}>
+                    Start
+                </StyledButton>
             </Container>
         </>
     );
@@ -78,19 +66,6 @@ const Container = styled.div`
     background-color: #00000083;
     padding: 2rem;
     border-radius: 10px;
-`;
-
-const InputContainer = styled.form`
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-`;
-
-const StyledInput = styled.input`
-    padding: 0.5rem;
-    font-size: 1rem;
-    border-radius: 5px;
-    text-align: center;
 `;
 
 const StyledButton = styled.button`
