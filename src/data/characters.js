@@ -1,107 +1,125 @@
 const characters = {
-    wally: {
+    0: {
+        name: "Wally",
         maxX: 2186,
         minX: 2146,
         maxY: 1036,
         minY: 976,
     },
-    wenda: {
+    1: {
+        name: "Wenda",
         maxX: 3404,
         minX: 3365,
         maxY: 2694,
         minY: 2648,
     },
-    odlaw: {
+    2: {
+        name: "Odlaw",
         maxX: 2371,
         minX: 2339,
         maxY: 1909,
         minY: 1834,
     },
-    wizard: {
+    3: {
+        name: "Wizard",
         maxX: 1417,
         minX: 1374,
         maxY: 1746,
         minY: 1678,
     },
-    marge_simpson: {
+    4: {
+        name: "Marge Simpson",
         maxX: 1142,
         minX: 1097,
         maxY: 1402,
         minY: 1311,
     },
-    homer_simpson: {
+    5: {
+        name: "Homer Simpson",
         maxX: 3051,
         minX: 3004,
         maxY: 1046,
         minY: 961,
     },
-    lisa_simpson: {
+    6: {
+        name: "Lisa Simpson",
         maxX: 2061,
         minX: 2034,
         maxY: 1161,
         minY: 1124,
     },
-    bart_simpson: {
+    7: {
+        name: "Bart Simpson",
         maxX: 2032,
         minX: 2007,
         maxY: 871,
         minY: 831,
     },
-    maggie_simpson: {
+    8: {
+        name: "Maggie Simpson",
         maxX: 2267,
         minX: 2236,
         maxY: 2332,
         minY: 2295,
     },
-    donatello: {
+    9: {
+        name: "Donatello",
         maxX: 1726,
         minX: 1637,
         maxY: 1593,
         minY: 1517,
     },
-    michelangelo: {
+    10: {
+        name: "Michelangelo",
         maxX: 3676,
         minX: 3619,
         maxY: 1381,
         minY: 1294,
     },
-    leonardo: {
+    11: {
+        name: "Leonardo",
         maxX: 3221,
         minX: 3188,
         maxY: 150,
         minY: 109,
     },
-    raphael: {
+    12: {
+        name: "Raphael",
         maxX: 3006,
         minX: 2935,
         maxY: 461,
         minY: 360,
     },
-    fry: {
+    13: {
+        name: "Fry",
         maxX: 1810,
         minX: 1735,
         maxY: 1228,
         minY: 1162,
     },
-    leela: {
+    14: {
+        name: "Leela",
         maxX: 3433,
         minX: 3406,
         maxY: 2439,
         minY: 2390,
     },
-    bender: {
+    15: {
+        name: "Bender",
         maxX: 2506,
         minX: 2444,
         maxY: 2459,
         minY: 2358,
     },
-    rick_and_morty: {
+    16: {
+        name: "Rick and Morty",
         maxX: 360,
         minX: 315,
         maxY: 2596,
         minY: 2550,
     },
-    doc_amd_marty: {
+    17: {
+        name: "Doc amd Marty",
         maxX: 714,
         minX: 644,
         maxY: 940,

@@ -2,13 +2,13 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import ReactDOM from "react-dom";
 
-export default function WinnerModal() {
+export default function WinnerModal({ foundCharacter }) {
     const navigate = useNavigate();
 
     return ReactDOM.createPortal(
         <Overlay>
             <ModalBox onClick={(e) => e.stopPropagation()}>
-                <h2>You have found Wally!</h2>
+                <h2>You have found {foundCharacter}!</h2>
                 <RestartButton type="button" onClick={() => navigate("/")}>
                     Restart
                 </RestartButton>

@@ -8,14 +8,20 @@ import characters from "../data/characters";
 export default function Game() {
     const imgRef = useRef(null);
     const [win, setWin] = useState(false);
+    const [foundCharacter, setFoundCharacter] = useState("");
 
-    function checkClick(x, y, character) {
-        return (
-            x <= character.maxX &&
-            x >= character.minX &&
-            y <= character.maxY &&
-            y >= character.minY
-        );
+    function checkClick(x, y, maxX, minX, maxY, minY) {
+        return x <= maxX && x >= minX && y <= maxY && y >= minY;
+    }
+
+    function findClickedCharacter(x, y) {
+        for (const c in characters) {
+            const { name, maxX, minX, maxY, minY } = characters[c];
+            if (checkClick(x, y, maxX, minX, maxY, minY)) {
+                return name;
+            }
+        }
+        return null;
     }
 
     const handleClick = (e) => {
@@ -32,13 +38,15 @@ export default function Game() {
         const ratioX = img.naturalWidth / rect.width;
         const ratioY = img.naturalHeight / rect.height;
 
-        // final coordinated of the click in pixels
+        // final coordinates of the click in pixels
         const x = Math.round(clickedX * ratioX);
         const y = Math.round(clickedY * ratioY);
 
-        console.log("Coordinates:", x, y);
+        // console.log("Coordinates:", x, y);
 
-        if (checkClick(x, y, characters.wally)) {
+        const clickedCharacter = findClickedCharacter(x, y);
+        if (clickedCharacter) {
+            setFoundCharacter(clickedCharacter);
             setWin(true);
         }
     };
@@ -74,7 +82,7 @@ export default function Game() {
                     </TransformComponent>
                 </TransformWrapper>
             </Container>
-            {win && <WinnerModal />}
+            {win && <WinnerModal foundCharacter={foundCharacter} />}
         </>
     );
 }
@@ -84,6 +92,7 @@ const Container = styled.div`
     height: 100vh;
     overflow: hidden;
     background: black;
+    cursor: crosshair;
 `;
 
 const StyledImg = styled.img`
