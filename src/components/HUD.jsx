@@ -1,0 +1,85 @@
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+
+export default function HUD({ characters, foundCharacters }) {
+    const navigate = useNavigate();
+
+    return (
+        <>
+            <Container>
+                {characters.map((character, index) => {
+                    // check if character's name present in "foundCharacters" array
+                    // and paint his background green if found
+                    const isFound = foundCharacters.some(
+                        (fc) => fc.name === character.name
+                    );
+
+                    return (
+                        <CharacterDiv key={index} $found={isFound}>
+                            <img
+                                src={`src/assets/characters_png/${character.img}`}
+                                alt={character.name}
+                            />
+                            <p>{character.name}</p>
+                        </CharacterDiv>
+                    );
+                })}
+            </Container>
+            <RestartBtn onClick={() => navigate("/")}>RESTART</RestartBtn>
+        </>
+    );
+}
+
+const Container = styled.div`
+    position: absolute;
+    top: 0.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1rem;
+    z-index: 5;
+    background-color: #000000d1;
+    border-radius: 10px;
+    padding: 1rem;
+`;
+
+const CharacterDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 0.2rem;
+    background-color: ${({ $found }) => ($found ? "#0b721c" : "transparent")};
+
+    & img {
+        width: auto;
+        height: 60px;
+    }
+
+    & p {
+        font-size: 0.8rem;
+    }
+`;
+
+const RestartBtn = styled.button`
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #a5a5f5;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-weight: 900;
+    z-index: 5;
+
+    &:hover {
+        background-color: #58589c;
+        color: white;
+    }
+`;

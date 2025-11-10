@@ -1,6 +1,7 @@
 const characters = {
     0: {
         name: "Wally",
+        img: "wally.png",
         maxX: 2186,
         minX: 2146,
         maxY: 1036,
@@ -8,6 +9,7 @@ const characters = {
     },
     1: {
         name: "Wenda",
+        img: "wenda.png",
         maxX: 3404,
         minX: 3365,
         maxY: 2694,
@@ -15,6 +17,7 @@ const characters = {
     },
     2: {
         name: "Odlaw",
+        img: "odlaw.png",
         maxX: 2371,
         minX: 2339,
         maxY: 1909,
@@ -22,6 +25,7 @@ const characters = {
     },
     3: {
         name: "Wizard",
+        img: "wizard.png",
         maxX: 1417,
         minX: 1374,
         maxY: 1746,
@@ -29,6 +33,7 @@ const characters = {
     },
     4: {
         name: "Marge Simpson",
+        img: "marge_simpson.png",
         maxX: 1142,
         minX: 1097,
         maxY: 1402,
@@ -36,6 +41,7 @@ const characters = {
     },
     5: {
         name: "Homer Simpson",
+        img: "homer_simpson.png",
         maxX: 3051,
         minX: 3004,
         maxY: 1046,
@@ -43,6 +49,7 @@ const characters = {
     },
     6: {
         name: "Lisa Simpson",
+        img: "lisa_simpson.png",
         maxX: 2061,
         minX: 2034,
         maxY: 1161,
@@ -50,6 +57,7 @@ const characters = {
     },
     7: {
         name: "Bart Simpson",
+        img: "bart_simpson.png",
         maxX: 2032,
         minX: 2007,
         maxY: 871,
@@ -57,6 +65,7 @@ const characters = {
     },
     8: {
         name: "Maggie Simpson",
+        img: "maggie_simpson.png",
         maxX: 2267,
         minX: 2236,
         maxY: 2332,
@@ -64,6 +73,7 @@ const characters = {
     },
     9: {
         name: "Donatello",
+        img: "donatello.png",
         maxX: 1726,
         minX: 1637,
         maxY: 1593,
@@ -71,6 +81,7 @@ const characters = {
     },
     10: {
         name: "Michelangelo",
+        img: "michelangelo.png",
         maxX: 3676,
         minX: 3619,
         maxY: 1381,
@@ -78,6 +89,7 @@ const characters = {
     },
     11: {
         name: "Leonardo",
+        img: "leonardo.png",
         maxX: 3221,
         minX: 3188,
         maxY: 150,
@@ -85,6 +97,7 @@ const characters = {
     },
     12: {
         name: "Raphael",
+        img: "raphael.png",
         maxX: 3006,
         minX: 2935,
         maxY: 461,
@@ -92,6 +105,7 @@ const characters = {
     },
     13: {
         name: "Fry",
+        img: "fry.png",
         maxX: 1810,
         minX: 1735,
         maxY: 1228,
@@ -99,6 +113,7 @@ const characters = {
     },
     14: {
         name: "Leela",
+        img: "leela.png",
         maxX: 3433,
         minX: 3406,
         maxY: 2439,
@@ -106,24 +121,11 @@ const characters = {
     },
     15: {
         name: "Bender",
+        img: "bender.png",
         maxX: 2506,
         minX: 2444,
         maxY: 2459,
         minY: 2358,
-    },
-    16: {
-        name: "Rick and Morty",
-        maxX: 360,
-        minX: 315,
-        maxY: 2596,
-        minY: 2550,
-    },
-    17: {
-        name: "Doc amd Marty",
-        maxX: 714,
-        minX: 644,
-        maxY: 940,
-        minY: 857,
     },
 };
 

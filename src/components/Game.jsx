@@ -1,24 +1,45 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import styled from "styled-components";
 import mainImg from "../assets/main.jpg";
 import WinnerModal from "./WinnerModal";
 import characters from "../data/characters";
+import HUD from "./HUD";
 
-export default function Game() {
+export default function Game({ mode }) {
     const imgRef = useRef(null);
     const [win, setWin] = useState(false);
-    const [foundCharacter, setFoundCharacter] = useState("");
+    const [charactersList, setCharactersList] = useState([]);
+    const [foundCharacters, setFoundCharacters] = useState([]);
 
+    // populate charactersList based on chosen game mode
+    const groups = {
+        wally: [0, 1, 2, 3],
+        simpsons: [4, 5, 6, 7, 8],
+        tmnt: [9, 10, 11, 12],
+        futurama: [13, 14, 15],
+    };
+
+    useEffect(() => {
+        if (groups[mode]) {
+            setCharactersList(groups[mode].map((i) => characters[i]));
+        }
+    }, [mode]);
+
+    // click handling functions
     function checkClick(x, y, maxX, minX, maxY, minY) {
         return x <= maxX && x >= minX && y <= maxY && y >= minY;
     }
 
     function findClickedCharacter(x, y) {
-        for (const c in characters) {
-            const { name, maxX, minX, maxY, minY } = characters[c];
+        for (const c in charactersList) {
+            const { maxX, minX, maxY, minY } = charactersList[c];
             if (checkClick(x, y, maxX, minX, maxY, minY)) {
-                return name;
+                setFoundCharacters((prev) =>
+                    prev.some((fc) => fc.name === charactersList[c].name) // avoid adding duplicates
+                        ? prev
+                        : [...prev, charactersList[c]]
+                );
             }
         }
         return null;
@@ -44,15 +65,25 @@ export default function Game() {
 
         // console.log("Coordinates:", x, y);
 
-        const clickedCharacter = findClickedCharacter(x, y);
-        if (clickedCharacter) {
-            setFoundCharacter(clickedCharacter);
+        findClickedCharacter(x, y);
+    };
+
+    // finish if all characters found
+    useEffect(() => {
+        if (
+            charactersList.length > 0 &&
+            foundCharacters.length === charactersList.length
+        ) {
             setWin(true);
         }
-    };
+    }, [foundCharacters, charactersList]);
 
     return (
         <>
+            <HUD
+                characters={charactersList}
+                foundCharacters={foundCharacters}
+            />
             <Container onClick={handleClick}>
                 <TransformWrapper
                     initialScale={Math.max(
@@ -82,7 +113,7 @@ export default function Game() {
                     </TransformComponent>
                 </TransformWrapper>
             </Container>
-            {win && <WinnerModal foundCharacter={foundCharacter} />}
+            {win && <WinnerModal />}
         </>
     );
 }

@@ -1,9 +1,15 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import mainImg from "../assets/main.jpg";
+import { useEffect } from "react";
 
-export default function Welcome() {
+export default function Welcome({ setMode }) {
     const navigate = useNavigate();
+
+    useEffect(() => {
+        setMode("wally");
+    }, []);
+
     return (
         <>
             <Background>
@@ -16,7 +22,52 @@ export default function Welcome() {
             </Background>
             <Container>
                 <h1>Photo tagging game</h1>
-                <h3>Find Cartoon Characters</h3>
+                <fieldset onChange={(e) => setMode(e.target.value)}>
+                    <legend>Choose set of characters</legend>
+
+                    <div>
+                        <input
+                            type="radio"
+                            name="mode"
+                            id="wally"
+                            value="wally"
+                            defaultChecked
+                        />
+                        <label htmlFor="wally">Where's Wally</label>
+                    </div>
+
+                    <div>
+                        <input
+                            type="radio"
+                            name="mode"
+                            id="simpsons"
+                            value="simpsons"
+                        />
+                        <label htmlFor="simpsons">Simpsons</label>
+                    </div>
+
+                    <div>
+                        <input
+                            type="radio"
+                            name="mode"
+                            id="futurama"
+                            value="futurama"
+                        />
+                        <label htmlFor="futurama">Futurama</label>
+                    </div>
+
+                    <div>
+                        <input
+                            type="radio"
+                            name="mode"
+                            id="tmnt"
+                            value="tmnt"
+                        />
+                        <label htmlFor="tmnt">
+                            Teenage Mutant Ninja Turtles
+                        </label>
+                    </div>
+                </fieldset>
                 <StyledButton type="button" onClick={() => navigate("/game")}>
                     Start
                 </StyledButton>
