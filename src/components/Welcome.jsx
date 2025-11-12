@@ -21,7 +21,7 @@ export default function Welcome({ setMode }) {
                 <Overlay />
             </Background>
             <Container>
-                <h1>Photo tagging game</h1>
+                <Title>Photo tagging game</Title>
                 <fieldset onChange={(e) => setMode(e.target.value)}>
                     <legend>Choose set of characters</legend>
 
@@ -72,6 +72,26 @@ export default function Welcome({ setMode }) {
                     Start
                 </StyledButton>
             </Container>
+            <Credits>
+                <p>
+                    Picture creator{" "}
+                    <a
+                        href="https://www.reddit.com/user/TheCartoonRay/"
+                        target="_blank"
+                    >
+                        u/TheCartoonRay
+                    </a>
+                </p>
+                <p>
+                    <a
+                        href="https://github.com/KVG24/photo-tagging-app"
+                        target="_blank"
+                    >
+                        GitHub
+                    </a>{" "}
+                    of this page
+                </p>
+            </Credits>
         </>
     );
 }
@@ -119,6 +139,14 @@ const Container = styled.div`
     border-radius: 10px;
 `;
 
+const Title = styled.h1`
+    text-align: center;
+
+    @media (max-width: 500px) {
+        font-size: 1.3rem;
+    }
+`;
+
 const StyledButton = styled.button`
     padding: 0.5rem 1rem;
     font-size: 1rem;
@@ -132,5 +160,33 @@ const StyledButton = styled.button`
     &:hover {
         background-color: #58589c;
         color: white;
+    }
+`;
+
+const Credits = styled.div`
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #a5a5f5;
+    color: black;
+    padding: 0.5rem;
+    border-radius: 5px 5px 0 0;
+    font-weight: 500;
+    text-align: center;
+
+    & a {
+        color: #a5a5f5;
+        background-color: #000000;
+        text-decoration: none;
+        padding: 0 0.5rem 0 0.5rem;
+
+        &:hover {
+            color: #ffffff;
+        }
+    }
+
+    @media (max-width: 500px) {
+        font-size: 0.7rem;
     }
 `;
