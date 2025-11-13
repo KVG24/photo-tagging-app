@@ -2,13 +2,18 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import ReactDOM from "react-dom";
 
-export default function WinnerModal() {
+export default function WinnerModal({ time }) {
     const navigate = useNavigate();
 
     return ReactDOM.createPortal(
         <Overlay>
             <ModalBox onClick={(e) => e.stopPropagation()}>
                 <h2>You have found all characters!</h2>
+                {time && (
+                    <p>
+                        You've made it in <strong>{time}</strong>
+                    </p>
+                )}
                 <RestartButton type="button" onClick={() => navigate("/")}>
                     Restart
                 </RestartButton>

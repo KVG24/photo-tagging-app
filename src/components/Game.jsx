@@ -6,13 +6,45 @@ import WinnerModal from "./WinnerModal";
 import characters from "../data/characters";
 import HUD from "./HUD";
 
-export default function Game({ mode }) {
+export default function Game({ mode, timerMode }) {
     const imgRef = useRef(null);
     const [win, setWin] = useState(false);
     const [charactersList, setCharactersList] = useState([]);
     const [foundCharacters, setFoundCharacters] = useState([]);
     const [tooltip, setTooltip] = useState({ x: 0, y: 0, visible: false });
     const [wrongCharacter, setWrongCharacter] = useState(null);
+    const [time, setTime] = useState(0);
+    const [runningTimer, setRunningTimer] = useState(false);
+
+    // timer functionality
+
+    useEffect(() => {
+        timerMode ? setRunningTimer(true) : setRunningTimer(false);
+    }, [timerMode]);
+
+    useEffect(() => {
+        let interval;
+        if (runningTimer) {
+            interval = setInterval(() => {
+                setTime((prev) => prev + 10); // update every 10ms
+            }, 10);
+        }
+        return () => clearInterval(interval);
+    }, [runningTimer]);
+
+    // format time as mm:ss:ms
+    const formatTime = (time) => {
+        const minutes = String(Math.floor(time / 60000)).padStart(2, "0");
+        const seconds = String(Math.floor((time % 60000) / 1000)).padStart(
+            2,
+            "0"
+        );
+        const milliseconds = String(Math.floor((time % 1000) / 10)).padStart(
+            2,
+            "0"
+        );
+        return `${minutes}:${seconds}:${milliseconds}`;
+    };
 
     // populate charactersList based on chosen game mode
     const groups = {
@@ -77,6 +109,7 @@ export default function Game({ mode }) {
             foundCharacters.length === charactersList.length
         ) {
             setWin(true);
+            setRunningTimer(false);
         }
     }, [foundCharacters, charactersList]);
 
@@ -85,6 +118,7 @@ export default function Game({ mode }) {
             <HUD
                 characters={charactersList}
                 foundCharacters={foundCharacters}
+                time={formatTime(time)}
             />
             <Container onClick={handleClick}>
                 <TransformWrapper
@@ -148,7 +182,7 @@ export default function Game({ mode }) {
                     </TransformComponent>
                 </TransformWrapper>
             </Container>
-            {win && <WinnerModal />}
+            {win && <WinnerModal time={formatTime(time)} />}
         </>
     );
 }

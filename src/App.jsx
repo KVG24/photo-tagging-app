@@ -7,12 +7,24 @@ import Leaderboards from "./components/Leaderboards";
 
 function App() {
     const [mode, setMode] = useState("wally");
+    const [timerMode, setTimerMode] = useState(false);
 
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Welcome setMode={setMode} />} />
-                <Route path="game" element={<Game mode={mode} />} />
+                <Route
+                    path="/"
+                    element={
+                        <Welcome
+                            setMode={setMode}
+                            setTimerMode={setTimerMode}
+                        />
+                    }
+                />
+                <Route
+                    path="game"
+                    element={<Game mode={mode} timerMode={timerMode} />}
+                />
                 <Route path="leaderboards" element={<Leaderboards />} />
             </Routes>
         </BrowserRouter>

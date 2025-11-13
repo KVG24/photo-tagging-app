@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import mainImg from "../assets/main.jpg";
 import { useEffect } from "react";
 
-export default function Welcome({ setMode }) {
+export default function Welcome({ setMode, setTimerMode }) {
     const navigate = useNavigate();
 
     useEffect(() => {
         setMode("wally");
+        setTimerMode(false);
     }, []);
 
     return (
@@ -68,6 +69,15 @@ export default function Welcome({ setMode }) {
                         </label>
                     </div>
                 </fieldset>
+                <TimerContainer>
+                    <input
+                        type="checkbox"
+                        name="timerMode"
+                        id="timerMode"
+                        onChange={(e) => setTimerMode(e.target.checked)}
+                    />
+                    <label htmlFor="timerMode">Timer</label>
+                </TimerContainer>
                 <StyledButton type="button" onClick={() => navigate("/game")}>
                     Start
                 </StyledButton>
@@ -145,6 +155,13 @@ const Title = styled.h1`
     @media (max-width: 500px) {
         font-size: 1.3rem;
     }
+`;
+
+const TimerContainer = styled.div`
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
 `;
 
 const StyledButton = styled.button`
