@@ -11,6 +11,8 @@ export default function Game({ mode }) {
     const [win, setWin] = useState(false);
     const [charactersList, setCharactersList] = useState([]);
     const [foundCharacters, setFoundCharacters] = useState([]);
+    const [tooltip, setTooltip] = useState({ x: 0, y: 0, visible: false });
+    const [wrongCharacter, setWrongCharacter] = useState(null);
 
     // populate charactersList based on chosen game mode
     const groups = {
@@ -31,20 +33,6 @@ export default function Game({ mode }) {
         return x <= maxX && x >= minX && y <= maxY && y >= minY;
     }
 
-    function findClickedCharacter(x, y) {
-        for (const c in charactersList) {
-            const { maxX, minX, maxY, minY } = charactersList[c];
-            if (checkClick(x, y, maxX, minX, maxY, minY)) {
-                setFoundCharacters((prev) =>
-                    prev.some((fc) => fc.name === charactersList[c].name) // avoid adding duplicates
-                        ? prev
-                        : [...prev, charactersList[c]]
-                );
-            }
-        }
-        return null;
-    }
-
     const handleClick = (e) => {
         const img = imgRef.current;
         if (!img) return;
@@ -63,9 +51,23 @@ export default function Game({ mode }) {
         const x = Math.round(clickedX * ratioX);
         const y = Math.round(clickedY * ratioY);
 
-        // console.log("Coordinates:", x, y);
+        setTooltip({ x, y, visible: true });
+    };
 
-        findClickedCharacter(x, y);
+    const handleTooltipClick = (e, character) => {
+        e.stopPropagation();
+
+        const { maxX, minX, maxY, minY } = character;
+        if (checkClick(tooltip.x, tooltip.y, maxX, minX, maxY, minY)) {
+            setFoundCharacters((prev) =>
+                prev.some((fc) => fc.name === character.name) // avoid adding duplicates
+                    ? prev
+                    : [...prev, character]
+            );
+        } else {
+            setWrongCharacter(character.name); // set clicked character as "wrong" for animation use
+            setTimeout(() => setWrongCharacter(null), 500); // clear state
+        }
     };
 
     // finish if all characters found
@@ -110,6 +112,39 @@ export default function Game({ mode }) {
                             alt="Image with cartoon characters"
                             draggable={false}
                         />
+                        {tooltip.visible && (
+                            <Tooltip
+                                style={{
+                                    left: tooltip.x + 50,
+                                    top: tooltip.y - 50,
+                                }}
+                            >
+                                {charactersList.map((character, index) => {
+                                    // check if character's name present in "foundCharacters" array
+                                    // and paint his background green if found
+                                    const isFound = foundCharacters.some(
+                                        (fc) => fc.name === character.name
+                                    );
+                                    // check if clicked character is wrong to play shake animation
+                                    const isWrong =
+                                        wrongCharacter === character.name;
+                                    return (
+                                        <CharDiv
+                                            key={index}
+                                            onClick={(e) =>
+                                                handleTooltipClick(e, character)
+                                            }
+                                            $found={isFound}
+                                            $wrong={isWrong}
+                                        >
+                                            <CharName>
+                                                {character.name}
+                                            </CharName>
+                                        </CharDiv>
+                                    );
+                                })}
+                            </Tooltip>
+                        )}
                     </TransformComponent>
                 </TransformWrapper>
             </Container>
@@ -132,4 +167,59 @@ const StyledImg = styled.img`
     object-fit: contain;
     user-select: none;
     cursor: crosshair;
+`;
+
+const Tooltip = styled.div`
+    background-color: #000000c0;
+    position: absolute;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+`;
+
+const CharDiv = styled.div`
+    padding: 0.2rem 0.5rem;
+    text-align: center;
+    border-radius: 5px;
+    background-color: ${({ $found }) => ($found ? "#0b721c" : "transparent")};
+    border: ${({ $found }) =>
+        $found ? "2px solid #62e478" : "2px solid #ffffff"};
+
+    transition: all 0.2s;
+
+    &:hover {
+        background-color: #575757;
+    }
+
+    ${({ $wrong }) =>
+        $wrong &&
+        `
+    animation: shake 0.3s;
+    border: 2px solid red;
+  `}
+
+    @keyframes shake {
+        0% {
+            transform: translateX(0);
+        }
+        25% {
+            transform: translateX(-10px);
+        }
+        50% {
+            transform: translateX(10px);
+        }
+        75% {
+            transform: translateX(-5px);
+        }
+        100% {
+            transform: translateX(0);
+        }
+    }
+`;
+
+const CharName = styled.p`
+    font-size: 2rem;
 `;

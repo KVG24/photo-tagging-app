@@ -36,11 +36,11 @@ const Container = styled.div`
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 1rem;
+    gap: 0.5rem;
     z-index: 5;
     background-color: #000000d1;
     border-radius: 10px;
-    padding: 1rem;
+    padding: 0.5rem;
 `;
 
 const CharacterDiv = styled.div`
@@ -48,7 +48,6 @@ const CharacterDiv = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid white;
     border-radius: 5px;
     padding: 0.2rem;
     background-color: ${({ $found }) => ($found ? "#0b721c" : "transparent")};
@@ -70,16 +69,18 @@ const RestartBtn = styled.button`
     transform: translateX(-50%);
     padding: 0.5rem 1rem;
     font-size: 1rem;
-    background-color: #a5a5f5;
+    background-color: #d63030;
+    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     font-weight: 900;
     z-index: 5;
+    border: 3px solid white;
 
     &:hover {
-        background-color: #58589c;
-        color: white;
+        background-color: white;
+        color: #d63030;
     }
 `;
