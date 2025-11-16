@@ -1,10 +1,11 @@
 import { useRef, useState, useEffect } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import useFetch from "../hooks/useFetch";
 import styled from "styled-components";
 import mainImg from "../assets/main.jpg";
 import WinnerModal from "./WinnerModal";
-import characters from "../data/characters";
 import HUD from "./HUD";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Game({ mode, timerMode }) {
     const imgRef = useRef(null);
@@ -15,9 +16,13 @@ export default function Game({ mode, timerMode }) {
     const [wrongCharacter, setWrongCharacter] = useState(null);
     const [time, setTime] = useState(0);
     const [runningTimer, setRunningTimer] = useState(false);
+    const {
+        data: characters,
+        loading,
+        error,
+    } = useFetch(`${API_URL}/characters`);
 
     // timer functionality
-
     useEffect(() => {
         timerMode ? setRunningTimer(true) : setRunningTimer(false);
     }, [timerMode]);
@@ -55,10 +60,10 @@ export default function Game({ mode, timerMode }) {
     };
 
     useEffect(() => {
-        if (groups[mode]) {
+        if (characters && groups[mode]) {
             setCharactersList(groups[mode].map((i) => characters[i]));
         }
-    }, [mode]);
+    }, [mode, characters]);
 
     // click handling functions
     function checkClick(x, y, maxX, minX, maxY, minY) {
@@ -112,6 +117,16 @@ export default function Game({ mode, timerMode }) {
             setRunningTimer(false);
         }
     }, [foundCharacters, charactersList]);
+
+    if (loading) return <p>Loading characters...</p>;
+
+    if (error)
+        return (
+            <>
+                <p>An error has occurred during fetching data from server</p>
+                <p>{error}</p>
+            </>
+        );
 
     return (
         <>

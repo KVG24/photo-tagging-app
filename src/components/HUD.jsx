@@ -8,23 +8,24 @@ export default function HUD({ characters, foundCharacters, time }) {
         <>
             <Container>
                 <CharContainer>
-                    {characters.map((character, index) => {
-                        // check if character's name present in "foundCharacters" array
-                        // and paint his background green if found
-                        const isFound = foundCharacters.some(
-                            (fc) => fc.name === character.name
-                        );
+                    {characters &&
+                        characters.map((character, index) => {
+                            // check if character's name present in "foundCharacters" array
+                            // and paint his background green if found
+                            const isFound = foundCharacters.some(
+                                (fc) => fc.name === character.name
+                            );
 
-                        return (
-                            <CharacterDiv key={index} $found={isFound}>
-                                <img
-                                    src={`src/assets/characters_png/${character.img}`}
-                                    alt={character.name}
-                                />
-                                <p>{character.name}</p>
-                            </CharacterDiv>
-                        );
-                    })}
+                            return (
+                                <CharacterDiv key={index} $found={isFound}>
+                                    <img
+                                        src={`src/assets/characters_png/${character.img}`}
+                                        alt={character.name}
+                                    />
+                                    <p>{character.name}</p>
+                                </CharacterDiv>
+                            );
+                        })}
                 </CharContainer>
                 {time !== "00:00:00" && <Timer>{time}</Timer>}
             </Container>
