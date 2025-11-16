@@ -81,6 +81,12 @@ export default function Welcome({ setMode, setTimerMode }) {
                 <StyledButton type="button" onClick={() => navigate("/game")}>
                     Start
                 </StyledButton>
+                <StyledButton
+                    type="button"
+                    onClick={() => navigate("/leaderboards")}
+                >
+                    Leaderboards
+                </StyledButton>
             </Container>
             <Credits>
                 <p>

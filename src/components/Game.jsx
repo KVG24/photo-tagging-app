@@ -197,7 +197,7 @@ export default function Game({ mode, timerMode }) {
                     </TransformComponent>
                 </TransformWrapper>
             </Container>
-            {win && <WinnerModal time={formatTime(time)} />}
+            {win && <WinnerModal time={formatTime(time)} mode={mode} />}
         </>
     );
 }

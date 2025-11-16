@@ -1,9 +1,13 @@
-import styled from "styled-components";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactDOM from "react-dom";
+import useAPI from "../hooks/useAPI";
+import styled from "styled-components";
 
-export default function WinnerModal({ time }) {
+export default function WinnerModal({ time, mode }) {
+    const { createRecord } = useAPI();
     const navigate = useNavigate();
+    const [name, setName] = useState("");
 
     return ReactDOM.createPortal(
         <Overlay>
@@ -14,6 +18,20 @@ export default function WinnerModal({ time }) {
                         You've made it in <strong>{time}</strong>
                     </p>
                 )}
+                <form
+                    onSubmit={() => {
+                        createRecord({ mode, name, time }), navigate("/");
+                    }}
+                >
+                    <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        placeholder="Your name here"
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                    <button type="submit">Post your record</button>
+                </form>
                 <RestartButton type="button" onClick={() => navigate("/")}>
                     Restart
                 </RestartButton>
