@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import useAPI from "../hooks/useAPI";
 import styled from "styled-components";
 
-export default function WinnerModal({ time, mode }) {
+export default function WinnerModal({ time, mode, timerMode }) {
     const { createRecord } = useAPI();
     const navigate = useNavigate();
     const [name, setName] = useState("");
@@ -13,25 +13,30 @@ export default function WinnerModal({ time, mode }) {
         <Overlay>
             <ModalBox onClick={(e) => e.stopPropagation()}>
                 <h2>You have found all characters!</h2>
-                {time && (
+                {time !== "00:00:00" && (
                     <p>
                         You've made it in <strong>{time}</strong>
                     </p>
                 )}
-                <form
-                    onSubmit={() => {
-                        createRecord({ mode, name, time }), navigate("/");
-                    }}
-                >
-                    <input
-                        type="text"
-                        name="name"
-                        id="name"
-                        placeholder="Your name here"
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                    <button type="submit">Post your record</button>
-                </form>
+                {timerMode && (
+                    <form
+                        onSubmit={() => {
+                            createRecord({ mode, name, time }), navigate("/");
+                        }}
+                    >
+                        <RecordInput
+                            type="text"
+                            name="name"
+                            id="name"
+                            placeholder="Your name here"
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                        <RecordSubmitBtn type="submit">
+                            Post your record
+                        </RecordSubmitBtn>
+                    </form>
+                )}
+
                 <RestartButton type="button" onClick={() => navigate("/")}>
                     Restart
                 </RestartButton>
@@ -64,6 +69,45 @@ const ModalBox = styled.div`
     gap: 1rem;
 `;
 
+const RecordInput = styled.input`
+    padding: 0.5rem;
+    font-size: 1rem;
+    background-color: #272727;
+    color: white;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    text-align: center;
+
+    @media (max-width: 400px) {
+        font-size: 0.8rem;
+        padding: 0.2rem;
+        border-radius: 5px;
+    }
+`;
+
+const RecordSubmitBtn = styled.button`
+    border: none;
+    border-radius: 0 5px 5px 0;
+    padding: 0.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    background-color: #a5a5f5;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+        background-color: white;
+        color: black;
+    }
+
+    @media (max-width: 400px) {
+        font-weight: 500;
+        font-size: 0.8rem;
+        padding: 0.2rem;
+        border-radius: 5px;
+    }
+`;
+
 const RestartButton = styled.button`
     padding: 0.5rem 1rem;
     font-size: 1rem;
@@ -77,5 +121,10 @@ const RestartButton = styled.button`
     &:hover {
         background-color: #58589c;
         color: white;
+    }
+
+    @media (max-width: 400px) {
+        font-size: 0.8rem;
+        padding: 0.2rem 0.5rem;
     }
 `;
