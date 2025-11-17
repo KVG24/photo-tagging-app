@@ -13,6 +13,7 @@ export default function Game({ mode, timerMode }) {
     const [charactersList, setCharactersList] = useState([]);
     const [foundCharacters, setFoundCharacters] = useState([]);
     const [tooltip, setTooltip] = useState({ x: 0, y: 0, visible: false });
+    const [isDragging, setIsDragging] = useState(false);
     const [wrongCharacter, setWrongCharacter] = useState(null);
     const [time, setTime] = useState(0);
     const [runningTimer, setRunningTimer] = useState(false);
@@ -71,6 +72,10 @@ export default function Game({ mode, timerMode }) {
     }
 
     const handleClick = (e) => {
+        if (isDragging) {
+            return;
+        }
+
         const img = imgRef.current;
         if (!img) return;
 
@@ -135,7 +140,11 @@ export default function Game({ mode, timerMode }) {
                 foundCharacters={foundCharacters}
                 time={formatTime(time)}
             />
-            <Container onClick={handleClick}>
+            <Container
+                onMouseDown={() => setIsDragging(false)}
+                onMouseMove={() => setIsDragging(true)}
+                onClick={handleClick}
+            >
                 <TransformWrapper
                     initialScale={Math.max(
                         window.innerWidth / 4000,
@@ -239,9 +248,10 @@ const CharDiv = styled.div`
     padding: 0.2rem 0.5rem;
     text-align: center;
     border-radius: 5px;
-    background-color: ${({ $found }) => ($found ? "#0b721c" : "transparent")};
+    background-color: ${({ $found }) => ($found ? "#0b721c94" : "transparent")};
     border: ${({ $found }) =>
         $found ? "2px solid #62e478" : "2px solid #ffffff"};
+    color: ${({ $found }) => ($found ? "#65ff7f" : "#ffffffd5")};
 
     transition: all 0.2s;
 
