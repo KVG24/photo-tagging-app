@@ -22,92 +22,101 @@ export default function Welcome({ setMode, setTimerMode }) {
                 <Overlay />
             </Background>
             <Container>
-                <Title>Photo tagging game</Title>
-                <fieldset onChange={(e) => setMode(e.target.value)}>
-                    <legend>Choose set of characters</legend>
+                <Menu>
+                    <Title>Photo tagging game</Title>
+                    <fieldset onChange={(e) => setMode(e.target.value)}>
+                        <legend>Choose set of characters</legend>
 
-                    <div>
-                        <input
-                            type="radio"
-                            name="mode"
-                            id="wally"
-                            value="wally"
-                            defaultChecked
-                        />
-                        <label htmlFor="wally">Where's Wally</label>
-                    </div>
+                        <RadioContainer>
+                            <input
+                                type="radio"
+                                name="mode"
+                                id="wally"
+                                value="wally"
+                                defaultChecked
+                            />
+                            <label htmlFor="wally">Where's Wally</label>
+                        </RadioContainer>
 
-                    <div>
-                        <input
-                            type="radio"
-                            name="mode"
-                            id="simpsons"
-                            value="simpsons"
-                        />
-                        <label htmlFor="simpsons">Simpsons</label>
-                    </div>
+                        <RadioContainer>
+                            <input
+                                type="radio"
+                                name="mode"
+                                id="simpsons"
+                                value="simpsons"
+                            />
+                            <label htmlFor="simpsons">Simpsons</label>
+                        </RadioContainer>
 
-                    <div>
-                        <input
-                            type="radio"
-                            name="mode"
-                            id="futurama"
-                            value="futurama"
-                        />
-                        <label htmlFor="futurama">Futurama</label>
-                    </div>
+                        <RadioContainer>
+                            <input
+                                type="radio"
+                                name="mode"
+                                id="futurama"
+                                value="futurama"
+                            />
+                            <label htmlFor="futurama">Futurama</label>
+                        </RadioContainer>
 
-                    <div>
+                        <RadioContainer>
+                            <input
+                                type="radio"
+                                name="mode"
+                                id="tmnt"
+                                value="tmnt"
+                            />
+                            <label htmlFor="tmnt">TNMT</label>
+                        </RadioContainer>
+                    </fieldset>
+                    <TimerContainer>
                         <input
-                            type="radio"
-                            name="mode"
-                            id="tmnt"
-                            value="tmnt"
+                            type="checkbox"
+                            name="timerMode"
+                            id="timerMode"
+                            onChange={(e) => setTimerMode(e.target.checked)}
                         />
-                        <label htmlFor="tmnt">
-                            Teenage Mutant Ninja Turtles
-                        </label>
-                    </div>
-                </fieldset>
-                <TimerContainer>
-                    <input
-                        type="checkbox"
-                        name="timerMode"
-                        id="timerMode"
-                        onChange={(e) => setTimerMode(e.target.checked)}
-                    />
-                    <label htmlFor="timerMode">Timer</label>
-                </TimerContainer>
-                <StyledButton type="button" onClick={() => navigate("/game")}>
-                    Start
-                </StyledButton>
-                <StyledButton
-                    type="button"
-                    onClick={() => navigate("/leaderboards")}
-                >
-                    Leaderboards
-                </StyledButton>
+                        <label htmlFor="timerMode">Timer</label>
+                    </TimerContainer>
+                    <StyledButton
+                        type="button"
+                        onClick={() => navigate("/game")}
+                    >
+                        Start
+                    </StyledButton>
+                    <StyledButton
+                        type="button"
+                        onClick={() => navigate("/leaderboards")}
+                    >
+                        Leaderboards
+                    </StyledButton>
+                </Menu>
+                <Credits>
+                    <p>
+                        Game Creator{" "}
+                        <a href="http://github.com/KVG24" target="_blank">
+                            KVG24
+                        </a>
+                    </p>
+                    <p>
+                        Picture creator{" "}
+                        <a
+                            href="https://www.reddit.com/user/TheCartoonRay/"
+                            target="_blank"
+                        >
+                            u/TheCartoonRay
+                        </a>
+                    </p>
+                    <p>
+                        <a
+                            href="https://github.com/KVG24/photo-tagging-app"
+                            target="_blank"
+                        >
+                            GitHub
+                        </a>{" "}
+                        of this page
+                    </p>
+                </Credits>
             </Container>
-            <Credits>
-                <p>
-                    Picture creator{" "}
-                    <a
-                        href="https://www.reddit.com/user/TheCartoonRay/"
-                        target="_blank"
-                    >
-                        u/TheCartoonRay
-                    </a>
-                </p>
-                <p>
-                    <a
-                        href="https://github.com/KVG24/photo-tagging-app"
-                        target="_blank"
-                    >
-                        GitHub
-                    </a>{" "}
-                    of this page
-                </p>
-            </Credits>
         </>
     );
 }
@@ -143,16 +152,40 @@ const Overlay = styled.div`
 `;
 
 const Container = styled.div`
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+`;
+
+const Menu = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     background-color: #00000083;
     padding: 2rem;
     border-radius: 10px;
+
+    & label {
+        font-size: 1.2rem;
+    }
+
+    & input[type="radio"] {
+        width: 20px;
+        height: 20px;
+    }
+
+    & input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+    }
+`;
+
+const RadioContainer = styled.div`
+    display: flex;
+    align-items: center;
 `;
 
 const Title = styled.h1`
@@ -188,7 +221,7 @@ const StyledButton = styled.button`
 
 const Credits = styled.div`
     position: absolute;
-    bottom: 0px;
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%);
     background-color: #a5a5f5;
@@ -209,7 +242,7 @@ const Credits = styled.div`
         }
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: 550px) {
         font-size: 0.7rem;
     }
 `;
