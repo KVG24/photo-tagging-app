@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useFetch from "../hooks/useFetch";
+import formatTime from "../utils/formatTime";
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Leaderboards() {
@@ -44,7 +45,7 @@ export default function Leaderboards() {
                             return (
                                 <Record key={index}>
                                     <div>{record.name}</div>
-                                    <div>{record.time}</div>
+                                    <div>{formatTime(record.time)}</div>
                                 </Record>
                             );
                         })}
@@ -57,7 +58,7 @@ export default function Leaderboards() {
                             return (
                                 <Record key={index}>
                                     <div>{record.name}</div>
-                                    <div>{record.time}</div>
+                                    <div>{formatTime(record.time)}</div>
                                 </Record>
                             );
                         })}
@@ -70,7 +71,7 @@ export default function Leaderboards() {
                             return (
                                 <Record key={index}>
                                     <div>{record.name}</div>
-                                    <div>{record.time}</div>
+                                    <div>{formatTime(record.time)}</div>
                                 </Record>
                             );
                         })}
@@ -83,7 +84,7 @@ export default function Leaderboards() {
                             return (
                                 <Record key={index}>
                                     <div>{record.name}</div>
-                                    <div>{record.time}</div>
+                                    <div>{formatTime(record.time)}</div>
                                 </Record>
                             );
                         })}

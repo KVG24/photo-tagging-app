@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ReactDOM from "react-dom";
 import useAPI from "../hooks/useAPI";
 import styled from "styled-components";
+import formatTime from "../utils/formatTime";
 
 export default function WinnerModal({ time, mode, timerMode }) {
     const { createRecord } = useAPI();
@@ -15,7 +16,7 @@ export default function WinnerModal({ time, mode, timerMode }) {
                 <h2>You have found all characters!</h2>
                 {time !== "00:00:00" && (
                     <p>
-                        You've made it in <strong>{time}</strong>
+                        You've made it in <strong>{formatTime(time)}</strong>
                     </p>
                 )}
                 {timerMode && (

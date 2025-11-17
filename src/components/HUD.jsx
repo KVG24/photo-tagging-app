@@ -1,5 +1,6 @@
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import formatTime from "../utils/formatTime";
 
 export default function HUD({ characters, foundCharacters, time }) {
     const navigate = useNavigate();
@@ -27,7 +28,9 @@ export default function HUD({ characters, foundCharacters, time }) {
                             );
                         })}
                 </CharContainer>
-                {time !== "00:00:00" && <Timer>{time}</Timer>}
+                {formatTime(time) !== "00:00:00" && (
+                    <Timer>{formatTime(time)}</Timer>
+                )}
             </Container>
             <RestartBtn onClick={() => navigate("/")}>RESTART</RestartBtn>
         </>

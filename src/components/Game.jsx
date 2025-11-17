@@ -38,20 +38,6 @@ export default function Game({ mode, timerMode }) {
         return () => clearInterval(interval);
     }, [runningTimer]);
 
-    // format time as mm:ss:ms
-    const formatTime = (time) => {
-        const minutes = String(Math.floor(time / 60000)).padStart(2, "0");
-        const seconds = String(Math.floor((time % 60000) / 1000)).padStart(
-            2,
-            "0"
-        );
-        const milliseconds = String(Math.floor((time % 1000) / 10)).padStart(
-            2,
-            "0"
-        );
-        return `${minutes}:${seconds}:${milliseconds}`;
-    };
-
     // populate charactersList based on chosen game mode
     const groups = {
         wally: [0, 1, 2, 3],
@@ -138,7 +124,7 @@ export default function Game({ mode, timerMode }) {
             <HUD
                 characters={charactersList}
                 foundCharacters={foundCharacters}
-                time={formatTime(time)}
+                time={time}
             />
             <Container
                 onMouseDown={() => setIsDragging(false)}
@@ -207,11 +193,7 @@ export default function Game({ mode, timerMode }) {
                 </TransformWrapper>
             </Container>
             {win && (
-                <WinnerModal
-                    time={formatTime(time)}
-                    mode={mode}
-                    timerMode={timerMode}
-                />
+                <WinnerModal time={time} mode={mode} timerMode={timerMode} />
             )}
         </>
     );
