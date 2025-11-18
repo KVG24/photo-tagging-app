@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import formatTime from "../utils/formatTime";
 
 export default function HUD({ characters, foundCharacters, time }) {
     const navigate = useNavigate();
@@ -28,9 +27,7 @@ export default function HUD({ characters, foundCharacters, time }) {
                             );
                         })}
                 </CharContainer>
-                {formatTime(time) !== "00:00:00" && (
-                    <Timer>{formatTime(time)}</Timer>
-                )}
+                {time !== "00:00:00" && <Timer>{time}</Timer>}
             </Container>
             <RestartBtn onClick={() => navigate("/")}>RESTART</RestartBtn>
         </>
@@ -55,6 +52,10 @@ const CharContainer = styled.div`
 
 const Timer = styled.p`
     text-align: center;
+
+    @media (max-width: 768px) {
+        font-size: 0.8rem;
+    }
 `;
 
 const CharacterDiv = styled.div`
@@ -68,11 +69,22 @@ const CharacterDiv = styled.div`
 
     & img {
         width: auto;
-        height: 60px;
+        height: 70px;
     }
 
     & p {
-        font-size: 0.8rem;
+        font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+        & img {
+            width: auto;
+            height: 40px;
+        }
+
+        & p {
+            font-size: 0.8rem;
+        }
     }
 `;
 
@@ -96,5 +108,10 @@ const RestartBtn = styled.button`
     &:hover {
         background-color: white;
         color: #d63030;
+    }
+
+    @media (max-width: 768px) {
+        padding: 0.2rem 0.5rem;
+        font-size: 0.8rem;
     }
 `;

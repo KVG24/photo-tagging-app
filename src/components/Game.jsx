@@ -5,6 +5,7 @@ import styled from "styled-components";
 import mainImg from "../assets/main.jpg";
 import WinnerModal from "./WinnerModal";
 import HUD from "./HUD";
+import formatTime from "../utils/formatTime";
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Game({ mode, timerMode }) {
@@ -124,7 +125,7 @@ export default function Game({ mode, timerMode }) {
             <HUD
                 characters={charactersList}
                 foundCharacters={foundCharacters}
-                time={time}
+                time={formatTime(time)}
             />
             <Container
                 onMouseDown={() => setIsDragging(false)}

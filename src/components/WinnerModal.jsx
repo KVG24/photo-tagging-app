@@ -14,7 +14,7 @@ export default function WinnerModal({ time, mode, timerMode }) {
         <Overlay>
             <ModalBox onClick={(e) => e.stopPropagation()}>
                 <h2>You have found all characters!</h2>
-                {time !== "00:00:00" && (
+                {formatTime(time) !== "00:00:00" && (
                     <p>
                         You've made it in <strong>{formatTime(time)}</strong>
                     </p>
