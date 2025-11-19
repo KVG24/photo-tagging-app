@@ -3,11 +3,14 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useFetch from "../hooks/useFetch";
 import formatTime from "../utils/formatTime";
+import Loading from "./Loading";
+import BackgroundComponent from "./BackgroundComponent";
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Leaderboards() {
     const navigate = useNavigate();
     const [records, setRecords] = useState([]);
+    const [showWarning, setShowWarning] = useState(false);
     const { data, loading, error } = useFetch(`${API_URL}/leaderboard`);
 
     useEffect(() => {
@@ -16,6 +19,7 @@ export default function Leaderboards() {
         }
     }, [data]);
 
+    // filter all records by game mode
     const wallyRecords = records.filter((record) => record.mode == "wally");
     const simpsonsRecords = records.filter(
         (record) => record.mode == "simpsons"
@@ -25,18 +29,47 @@ export default function Leaderboards() {
     );
     const tmntRecords = records.filter((record) => record.mode == "tmnt");
 
-    if (loading) return <p>Loading records...</p>;
+    // server loading warning
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setShowWarning(true);
+        }, 5000);
 
-    if (error)
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (loading)
         return (
             <>
-                <p>An error occurred during fetching records data</p>
-                <p>{error}</p>
+                <InfoDiv>
+                    <BackgroundComponent />
+                    <Loading />
+                    {showWarning && (
+                        <div>
+                            <p>Staring server</p>
+                            <p> Might take around 15 seconds</p>
+                        </div>
+                    )}
+                </InfoDiv>
             </>
         );
 
+    if (error) {
+        return (
+            <>
+                <InfoDiv>
+                    <BackgroundComponent />
+                    <p>Server failure</p>
+                    <p>Error: {error}</p>
+                    <a href="/">Back</a>
+                </InfoDiv>
+            </>
+        );
+    }
+
     return (
         <>
+            <BackgroundComponent />
             <Container>
                 <ModeContainer>
                     <h2>Wally</h2>
@@ -154,5 +187,23 @@ const HomeBtn = styled.button`
     &:hover {
         background-color: #58589c;
         color: white;
+    }
+`;
+
+const InfoDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+
+    & a {
+        background-color: #a5a5f5;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        text-decoration: none;
+        color: black;
     }
 `;
