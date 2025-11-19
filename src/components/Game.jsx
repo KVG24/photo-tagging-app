@@ -6,6 +6,8 @@ import mainImg from "../assets/main.jpg";
 import WinnerModal from "./WinnerModal";
 import HUD from "./HUD";
 import formatTime from "../utils/formatTime";
+import BackgroundComponent from "./BackgroundComponent";
+import Loading from "./Loading";
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Game({ mode, timerMode }) {
@@ -16,6 +18,7 @@ export default function Game({ mode, timerMode }) {
     const [tooltip, setTooltip] = useState({ x: 0, y: 0, visible: false });
     const [isDragging, setIsDragging] = useState(false);
     const [wrongCharacter, setWrongCharacter] = useState(null);
+    const [showWarning, setShowWarning] = useState(false);
     const [time, setTime] = useState(0);
     const [runningTimer, setRunningTimer] = useState(false);
     const {
@@ -110,15 +113,43 @@ export default function Game({ mode, timerMode }) {
         }
     }, [foundCharacters, charactersList]);
 
-    if (loading) return <p>Loading characters...</p>;
+    // server loading warning
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setShowWarning(true);
+        }, 5000);
 
-    if (error)
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (loading)
         return (
             <>
-                <p>An error has occurred during fetching data from server</p>
-                <p>{error}</p>
+                <InfoDiv>
+                    <BackgroundComponent />
+                    <Loading />
+                    {showWarning && (
+                        <div>
+                            <p>Staring server</p>
+                            <p> Might take around 15 seconds</p>
+                        </div>
+                    )}
+                </InfoDiv>
             </>
         );
+
+    if (error) {
+        return (
+            <>
+                <InfoDiv>
+                    <BackgroundComponent />
+                    <p>Server failure</p>
+                    <p>Error: {error}</p>
+                    <a href="/">Back</a>
+                </InfoDiv>
+            </>
+        );
+    }
 
     return (
         <>
@@ -270,4 +301,22 @@ const CharDiv = styled.div`
 
 const CharName = styled.p`
     font-size: 2rem;
+`;
+
+const InfoDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+
+    & a {
+        background-color: #a5a5f5;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        text-decoration: none;
+        color: black;
+    }
 `;

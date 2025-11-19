@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import mainImg from "../assets/main.jpg";
 import { useEffect } from "react";
+import BackgroundComponent from "./BackgroundComponent";
 
 export default function Welcome({ setMode, setTimerMode }) {
     const navigate = useNavigate();
@@ -13,14 +13,7 @@ export default function Welcome({ setMode, setTimerMode }) {
 
     return (
         <>
-            <Background>
-                <BackgroundImg
-                    src={mainImg}
-                    alt="background image"
-                    loading="lazy"
-                />
-                <Overlay />
-            </Background>
+            <BackgroundComponent />
             <Container>
                 <Menu>
                     <Title>Photo tagging game</Title>
@@ -120,36 +113,6 @@ export default function Welcome({ setMode, setTimerMode }) {
         </>
     );
 }
-
-const Background = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-`;
-
-const BackgroundImg = styled.img`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: blur(8px);
-    z-index: -2;
-`;
-
-const Overlay = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #00000090;
-    z-index: -1;
-`;
 
 const Container = styled.div`
     height: 100vh;
