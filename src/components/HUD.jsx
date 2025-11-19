@@ -19,7 +19,7 @@ export default function HUD({ characters, foundCharacters, time }) {
                             return (
                                 <CharacterDiv key={index} $found={isFound}>
                                     <img
-                                        src={`src/assets/${character.img}`}
+                                        src={`/${character.img}`}
                                         alt={character.name}
                                     />
                                     <p>{character.name}</p>
